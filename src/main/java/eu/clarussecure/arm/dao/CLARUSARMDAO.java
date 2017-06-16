@@ -76,9 +76,7 @@ public class CLARUSARMDAO {
 		doc.append("rights", rights);
 		
 		// Update the entry or insert one if needed
-		long modified = collection.replaceOne(and(eq("username", username), eq("dataspace", dataspace)), doc, new UpdateOptions().upsert(true)).getModifiedCount();
-		
-		return modified > 0;
+		return collection.replaceOne(and(eq("username", username), eq("dataspace", dataspace)), doc, new UpdateOptions().upsert(true)).wasAcknowledged();
 	}
 	
 	public String listUsers(){
