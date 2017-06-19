@@ -46,6 +46,10 @@ public class CommandParser{
 			case "add_user":
 				com = new AddUser(command);
 				break;
+            case "-h":
+            case "--help":
+                com = new Help(command);
+                break;
 			// Commands related to the authorization of the users
 			case "list_non_authorized":
 			case "add_authroization":

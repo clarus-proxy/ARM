@@ -10,17 +10,14 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.model.UpdateOptions;
-import static com.mongodb.client.model.Updates.*;
 import static com.mongodb.client.model.Filters.*;
-import com.mongodb.client.model.Sorts;
 
 import org.bson.Document;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import eu.clarussecure.proxy.access.CLARUSUserOperations;
-import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -29,14 +26,14 @@ import java.util.Set;
 public class CLARUSARMDAO {
 	// Singleton implementation
 	private static CLARUSARMDAO instance = null;
-	private Gson g;
-	private MongoDatabase db;
-	private MongoClient mongoClient;
+	private final MongoDatabase db;
+	private final MongoClient mongoClient;
 	private int instancesNumber;
 
 	private CLARUSARMDAO(){
-		// Create the GsonBuilder Object
-		this.g = new GsonBuilder().setPrettyPrinting().create();
+        // Correctly configure the log level
+        Logger mongoLogger = Logger.getLogger( "org.mongodb.driver" );
+        mongoLogger.setLevel(Level.SEVERE); 
 		// Create a new client connecting to "localhost" on port 
 		this.mongoClient = new MongoClient("localhost", 27017);
 

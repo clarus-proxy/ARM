@@ -1,0 +1,31 @@
+USAGE
+clarus-arm <command> <arguments> <options>
+
+whatever the command, the security manager must be identified (see options). The user is prompted for the credentials if they are not specified.
+
+COMMANDS
+list_users [-l, --login <name> [-p, --password <passwd> | -i <identityfile>]]
+    lists all the users
+
+list_dataspaces [-l, --login <name> [-p, --password <passwd> | -i <identityfile>]]
+    lists all the dataspaces. The dataspaces (one dataspace by security policy) are identified by their endpoint URL (e.g. <protocolscheme>://<hostname>:<port>/<baseurl>)
+
+show_rights <username> [-l, --login <name> [-p, --password <passwd> | -i <identityfile>]]
+    shows the list of dataspaces for which the user has access rights (read/write permissions)
+
+set <username> <dataspace> <rights>
+    sets the <username> read/write permission to the <dataspace> : <rights> can be r, rw or none. none means that <username> has no rights on the <dataspace>.
+
+OPTIONS
+
+-h, --help
+    shows a this usage summary
+
+-l, --login <name>
+    specifies the user to log in as on the CLARUS system
+
+-p, --password <passwd>
+    specifies the password of the user to log in on the CLARUS system
+
+-i <identityfile>
+    specifies the file from which the identity (private key) for CLARUS authentication is read.
