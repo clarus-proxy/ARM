@@ -1,14 +1,5 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package eu.clarussecure.arm;
 
-/**
- *
- * @author diegorivera
- */
 public class CommandParser{
 	// Singleton implementation.
 	private static CommandParser instance = null;
@@ -42,13 +33,16 @@ public class CommandParser{
 			case "set":
 				com = new eu.clarussecure.arm.Set(command);
 				break;
+            case "-h":
+            case "--help":
+                com = new Help(command);
+                break;
 			// Non defaults commands
 			case "add_user":
 				com = new AddUser(command);
 				break;
-            case "-h":
-            case "--help":
-                com = new Help(command);
+            case "add_dataspace":
+                com = new AddDataSpace(command);
                 break;
 			// Commands related to the authorization of the users
 			case "list_non_authorized":

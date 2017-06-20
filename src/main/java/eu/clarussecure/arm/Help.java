@@ -1,19 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package eu.clarussecure.arm;
-
-/**
- *
- * @author diegorivera
- */
 
 import java.io.InputStream;
 import java.io.IOException;
-
-import java.util.Set;
 
 public class Help extends Command{
 	//TODO - Put other data from the command as fields of the object
@@ -23,6 +11,7 @@ public class Help extends Command{
 		parseCommandArgs(args);
 	}
 
+    @Override
 	public CommandReturn execute() throws CommandExecutionException{
 		// Prepare the output
 		String data = "";
@@ -43,6 +32,7 @@ public class Help extends Command{
 		return cr;
 	}
 
+    @Override
 	public boolean parseCommandArgs(String[] args) throws CommandParserException{
 		// Default case, nothing to do here
 

@@ -1,56 +1,50 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package eu.clarussecure.arm;
 
+import eu.clarussecure.arm.dao.CLARUSARMDAO;
 import eu.clarussecure.datamodel.Policy;
 import eu.clarussecure.proxy.access.SimpleMongoUserAccess;
 import eu.clarussecure.secpolmgmt.dao.CLARUSPolicyDAO;
 
-/**
- *
- * @author diegorivera
- */
 public class ListDataspaces extends Command{
 	
 	public ListDataspaces(String[] args) throws CommandParserException{
 		parseCommandArgs(args);
 	}
 
+    @Override
 	public CommandReturn execute() throws CommandExecutionException {
-        // Authenticate the user
-        SimpleMongoUserAccess auth = SimpleMongoUserAccess.getInstance();
-        if(!auth.identify(this.loginID)){
-            throw new CommandExecutionException("The user '" + this.loginID + "' was not found as a registered user.");
-        }
-        
-        if(!auth.authenticate(this.loginID, this.password)){
-            throw new CommandExecutionException("The authentication of the user '" + this.loginID + "' failed.");
-        }
-        
-        // Check is the user is authroized to execute this command
-        if(!auth.userProfile(this.loginID).equals("admin")){
-            throw new CommandExecutionException("The user '" + this.loginID + "' is not authorized to execute this command.");
-        }
+        this.verifyRights("admin");
         
 		// Get the DAO instance and set the policies from the DB
+        /*
 		CLARUSPolicyDAO dao = CLARUSPolicyDAO.getInstance();
 		java.util.Set<Policy> policies = dao.getPolicies();
 		dao.deleteInstance();
-		
+        
 		// Iterate over the policies, extracting the endpoints
 		String list = "Registered Endpoints:\n";
 		
 		for(Policy p : policies){
 			list += p.getEndpoint().getEndpointURL() + "\n";
 		}
+        */
+        
+        // Get the list of registered dataspaces
+        CLARUSARMDAO dao = CLARUSARMDAO.getInstance();
+        java.util.Set<String> dataspaces = dao.listDataspaces();
+        dao.deleteInstance();
 
+        // Form the return string
+        String list = "";
+        for(String dataspace : dataspaces){
+            list += dataspace;
+        }
+        
 		CommandReturn cr = new CommandReturn(0, list);
 		return cr;
 	}
 
+    @Override
 	public boolean parseCommandArgs(String[] args) throws CommandParserException {
 		// First, sanity check
 		if (!args[0].toLowerCase().equals("list_dataspaces"))

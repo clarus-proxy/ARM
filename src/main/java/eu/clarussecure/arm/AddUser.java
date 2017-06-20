@@ -16,30 +16,18 @@ public class AddUser extends Command{
 	
 	private String username;
 	private String password;
+    private String role;
 	
 	public AddUser(String[] args) throws CommandParserException{
 		parseCommandArgs(args);
 	}
 
 	public CommandReturn execute() throws CommandExecutionException {
-        // Authenticate the user
-        SimpleMongoUserAccess auth = SimpleMongoUserAccess.getInstance();
-        if(!auth.identify(this.loginID)){
-            throw new CommandExecutionException("The user '" + this.loginID + "' was not found as a registered user.");
-        }
+        this.verifyRights("admin");
         
-        if(!auth.authenticate(this.loginID, this.password)){
-            throw new CommandExecutionException("The authentication of the user '" + this.loginID + "' failed.");
-        }
-        
-        // Check is the user is authroized to execute this command
-        if(!auth.userProfile(this.loginID).equals("admin")){
-            throw new CommandExecutionException("The user '" + this.loginID + "' is not authorized to execute this command.");
-        }
-        
-		// Get the DAO instanc and set the rights on the DB
+		// Get the DAO instance and set the rights on the DB
 		CLARUSUserOperations dao = CLARUSUserOperations.getInstance();
-		boolean success = dao.addUser(this.username, this.password);
+		boolean success = dao.addUser(this.username, this.password, this.role);
 		dao.deleteInstance();
 
 		int retValue = 0;
@@ -70,7 +58,13 @@ public class AddUser extends Command{
 		} catch (ArrayIndexOutOfBoundsException e){
 			throw new CommandParserException("The field 'password' was not given and it is required.");
 		}
-		
+        
+		try{ 
+			this.role = args[3];
+		} catch (ArrayIndexOutOfBoundsException e){
+			throw new CommandParserException("The field 'role' was not given and it is required.");
+		}
+        
 		// Only an admin can add a user
 		this.parseCredentials(args);
 		

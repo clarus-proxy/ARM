@@ -1,17 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package eu.clarussecure.arm;
 
-import eu.clarussecure.proxy.access.CLARUSAccess;
 import eu.clarussecure.proxy.access.SimpleMongoUserAccess;
 
-/**
- *
- * @author diegorivera
- */
 public abstract class Command{
 	// All the commands of the Security Administrator use the login, Password and/or Identify Files
 	protected String loginID = "";
@@ -22,13 +12,26 @@ public abstract class Command{
 
 	public abstract boolean parseCommandArgs(String[] args) throws CommandParserException;
 	
-	public boolean verifyRights(){
-		CLARUSAccess auth = SimpleMongoUserAccess.getInstance();
-		
-		if(!auth.identify(this.loginID))
-			return false;
-		
-		return auth.authenticate(this.loginID, this.password);
+	public boolean verifyRights(String profile) throws CommandExecutionException{
+        // This method will return true iff the user exists, is correctly authenticated AND has the given profile.
+        // TODO - Implement "... has the given profile OR BETTER"
+		SimpleMongoUserAccess auth = SimpleMongoUserAccess.getInstance();;
+        try{
+            // Check if the user exists
+            if(!auth.identify(this.loginID))
+                throw new CommandExecutionException("The user '" + this.loginID + "' was not found as a registered user.");
+
+            // Authenticate the user
+            if(!auth.authenticate(this.loginID, this.password))
+                throw new CommandExecutionException("The authentication of the user '" + this.loginID + "' failed.");
+
+            // Check is the user is authroized to execute this command
+            if(!auth.userProfile(this.loginID).equals(profile))
+                throw new CommandExecutionException("The user '" + this.loginID + "' is not authorized to execute this command.");
+        } finally {
+            auth.deleteInstance();
+        }
+		return true;
 	}
 
 	public boolean parseCredentials(String[] args){

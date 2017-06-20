@@ -15,6 +15,7 @@ import static com.mongodb.client.model.Filters.*;
 import org.bson.Document;
 
 import eu.clarussecure.proxy.access.CLARUSUserOperations;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -105,9 +106,37 @@ public class CLARUSARMDAO {
 		
 		return results;
 	}
+    
+    public boolean addDataspace(String name, String owner){
+		// Get the collection of BSON documents that contain the usersrights
+		MongoCollection<Document> collection = db.getCollection("dataspaces");
+        
+        Document doc = new Document("name", name);
+        doc.append("owner", owner);
+        
+		// Update the entry or insert one if needed
+		return collection.replaceOne(eq("name", name), doc, new UpdateOptions().upsert(true)).wasAcknowledged();
+    }
+    
+    public Set<String> listDataspaces(){
+		// Get the collection of BSON documents that contain the usersrights
+		MongoCollection<Document> collection = db.getCollection("dataspaces");
+        
+        MongoCursor<Document> iterator = collection.find().iterator();
+        
+        Set<String> result = new HashSet<>();
+        while(iterator.hasNext()){
+            Document dataspace = iterator.next();
+            String aux = String.format("Dataspace name %s, owner %s\n", dataspace.getString("name"), dataspace.getString("owner"));
+            result.add(aux);
+        }
+        return result;
+    }
 	
+    /*
 	public boolean setUserProfile(){
 		// TODO
 		return false;
 	}
+    */
 }
