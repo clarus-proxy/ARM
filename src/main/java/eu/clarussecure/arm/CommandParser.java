@@ -46,7 +46,7 @@ public class CommandParser {
             break;
         // Commands related to the authorization of the users
         case "list_non_authorized":
-        case "add_authroization":
+        case "add_authorization":
         case "list_authorized":
         case "remove_authorization":
         default:
