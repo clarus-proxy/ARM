@@ -1,9 +1,6 @@
 package eu.clarussecure.arm;
 
 import eu.clarussecure.arm.dao.CLARUSARMDAO;
-import eu.clarussecure.datamodel.Policy;
-import eu.clarussecure.proxy.access.SimpleMongoUserAccess;
-import eu.clarussecure.secpolmgmt.dao.CLARUSPolicyDAO;
 
 public class ListDataspaces extends Command {
 
@@ -14,20 +11,6 @@ public class ListDataspaces extends Command {
     @Override
     public CommandReturn execute() throws CommandExecutionException {
         this.verifyRights("admin");
-
-        // Get the DAO instance and set the policies from the DB
-        /*
-        	CLARUSPolicyDAO dao = CLARUSPolicyDAO.getInstance();
-        	java.util.Set<Policy> policies = dao.getPolicies();
-        	dao.deleteInstance();
-        
-        	// Iterate over the policies, extracting the endpoints
-        	String list = "Registered Endpoints:\n";
-        	
-        	for(Policy p : policies){
-        		list += p.getEndpoint().getEndpointURL() + "\n";
-        	}
-        */
 
         // Get the list of registered dataspaces
         CLARUSARMDAO dao = CLARUSARMDAO.getInstance();

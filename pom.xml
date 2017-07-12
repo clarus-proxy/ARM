@@ -90,17 +90,7 @@
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>CLARUS-DataModel</artifactId>
-            <version>0.5-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
             <artifactId>CLARUS-UserLibrary</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>CLARUS-SecPolMgmt</artifactId>
             <version>${project.version}</version>
         </dependency>
     </dependencies>
