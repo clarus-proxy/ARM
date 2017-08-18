@@ -1,6 +1,7 @@
 package eu.clarussecure.arm;
 
 import eu.clarussecure.arm.dao.CLARUSARMDAO;
+import java.util.Arrays;
 
 public class Set extends Command {
 
@@ -69,6 +70,8 @@ public class Set extends Command {
         } catch (ArrayIndexOutOfBoundsException e) {
             throw new CommandParserException("The field 'rights' was not given and it is required.");
         }
+        // Parse the credentials of the command
+        this.parseCredentials(args);
         return true;
     }
 }
