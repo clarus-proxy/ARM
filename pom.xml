@@ -5,6 +5,33 @@
     <artifactId>CLARUS-ARM</artifactId>
     <version>1.0.1</version>
     <packaging>jar</packaging>
+    <name>Access Rights Management Tool</name>
+    <description>Administration tool to handle access rights within the CLARUS proxy</description>
+    <url>http://clarussecure.eu</url>
+    <scm>
+        <url>https://github.com/clarus-proxy/ARM.git</url>
+    </scm>
+    <distributionManagement>
+      <snapshotRepository>
+        <id>ossrh</id>
+        <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+      </snapshotRepository>
+      <repository>
+        <id>ossrh</id>
+        <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+      </repository>
+    </distributionManagement>
+    <organization>
+      <name>The CLARUS Consortium</name>
+      <url>http://www.clarussecure.eu/</url>
+    </organization>
+    <licenses>
+      <license>
+        <name>TO BE DEFINED</name>
+        <url>TO BE DEFINED</url>
+        <distribution>TO BE DEFINED</distribution>
+      </license>
+    </licenses>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -80,6 +107,48 @@
 					 </execution>
 				 </executions>
 			</plugin>
+            <!-- Release related plugins-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                 <version>2.2.1</version>
+                 <executions>
+                   <execution>
+                     <id>attach-sources</id>
+                     <goals>
+                       <goal>jar-no-fork</goal>
+                     </goals>
+                   </execution>
+                 </executions>
+               </plugin>
+               <plugin>
+                 <groupId>org.apache.maven.plugins</groupId>
+                 <artifactId>maven-javadoc-plugin</artifactId>
+                 <version>2.9.1</version>
+                 <executions>
+                   <execution>
+                     <id>attach-javadocs</id>
+                     <goals>
+                       <goal>jar</goal>
+                     </goals>
+                   </execution>
+                 </executions>
+             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.5</version>
+                <executions>
+                  <execution>
+                    <id>sign-artifacts</id>
+                    <phase>verify</phase>
+                    <goals>
+                      <goal>sign</goal>
+                    </goals>
+                  </execution>
+                </executions>
+              </plugin>
+            <!-- /Release related plugins-->
 		</plugins>
 	</build>
     <dependencies>
