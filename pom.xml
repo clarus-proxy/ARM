@@ -25,6 +25,14 @@
       <name>The CLARUS Consortium</name>
       <url>http://www.clarussecure.eu/</url>
     </organization>
+    <developers>
+      <developer>
+       <name>Clarus Team</name>
+       <email>contact@clarussecure.eu</email>
+       <organization>Clarus Consortium</organization>
+       <organizationUrl>http://clarussecure.eu</organizationUrl>
+      </developer>
+    </developers>
     <licenses>
       <license>
         <name>TO BE DEFINED</name>
@@ -149,7 +157,7 @@
                 </executions>
               </plugin>
             <!-- /Release related plugins-->
-		</plugins>
+	</plugins>
 	</build>
     <dependencies>
         <dependency>
