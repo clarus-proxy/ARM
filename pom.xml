@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>eu.clarussecure</groupId>
     <artifactId>CLARUS-ARM</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <packaging>jar</packaging>
     <name>Access Rights Management Tool</name>
     <description>Administration tool to handle access rights within the CLARUS proxy</description>
